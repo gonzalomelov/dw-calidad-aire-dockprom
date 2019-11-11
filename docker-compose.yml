@@ -20,8 +20,8 @@ services:
       - '--storage.tsdb.retention.time=200h'
       - '--web.enable-lifecycle'
     restart: unless-stopped
-    expose:
-      - 9090
+    ports:
+      - "9090:9090"
     network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
@@ -36,8 +36,8 @@ services:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
     restart: unless-stopped
-    expose:
-      - 9093
+    ports:
+      - "9093:9093"
     network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
@@ -56,8 +56,8 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     restart: unless-stopped
-    expose:
-      - 9100
+    ports:
+      - "9100:9100"
     network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
@@ -73,8 +73,8 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
     restart: unless-stopped
-    expose:
-      - 8080
+    ports:
+      - "9081:8080"
     network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
@@ -94,38 +94,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
     restart: unless-stopped
-    expose:
-      - 3000
-    network_mode: bridge
-    labels:
-      org.label-schema.group: "monitoring"
-      traefik.enable: false
-
-  pushgateway:
-    image: prom/pushgateway:v1.0.0
-    container_name: pushgateway
-    restart: unless-stopped
-    expose:
-      - 9091
-    network_mode: bridge
-    labels:
-      org.label-schema.group: "monitoring"
-      traefik.enable: false
-
-  caddy:
-    image: stefanprodan/caddy
-    container_name: caddy
     ports:
       - "9080:3000"
-      - "9090:9090"
-      - "9093:9093"
-      - "9091:9091"
-    volumes:
-      - ./caddy/:/etc/caddy/
-    environment:
-      - ADMIN_USER=${ADMIN_USER:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-    restart: unless-stopped
     network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
@@ -133,3 +103,14 @@ services:
       traefik.frontend.rule: Host:monitor.bieccamvd.com
       traefik.docker.network: bridge
       traefik.port: 3000
+
+  pushgateway:
+    image: prom/pushgateway:v1.0.0
+    container_name: pushgateway
+    restart: unless-stopped
+    ports:
+      - "9091:9091"
+    network_mode: bridge
+    labels:
+      org.label-schema.group: "monitoring"
+      traefik.enable: false
