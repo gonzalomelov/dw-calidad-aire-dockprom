@@ -30,6 +30,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.enable: false
 
   alertmanager:
     image: prom/alertmanager:v0.19.0
@@ -46,6 +47,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.enable: false
 
   nodeexporter:
     image: prom/node-exporter:v0.18.1
@@ -66,6 +68,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.enable: false
 
   cadvisor:
     image: google/cadvisor:v0.33.0
@@ -83,6 +86,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.enable: false
 
   grafana:
     image: grafana/grafana:6.3.6
@@ -104,6 +108,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.enable: false
 
   pushgateway:
     image: prom/pushgateway:v1.0.0
@@ -115,6 +120,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.enable: false
 
   caddy:
     image: stefanprodan/caddy
@@ -134,3 +140,7 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+      traefik.backend: monitor
+      traefik.frontend.rule: Host:monitor.bieccamvd.com
+      traefik.docker.network: bridge
+      traefik.port: 9080
