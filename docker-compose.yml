@@ -143,4 +143,4 @@ services:
       traefik.backend: monitor
       traefik.frontend.rule: Host:monitor.bieccamvd.com
       traefik.docker.network: bridge
-      traefik.port: 9080
+      traefik.port: 3000
