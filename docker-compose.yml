@@ -28,7 +28,6 @@ services:
       - "9090:9090"
     networks:
       - monitor-net
-    network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
       traefik.enable: false
@@ -46,7 +45,6 @@ services:
       - "9093:9093"
     networks:
       - monitor-net
-    network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
       traefik.enable: false
@@ -68,7 +66,6 @@ services:
       - "9100:9100"
     networks:
       - monitor-net
-    network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
       traefik.enable: false
@@ -87,7 +84,6 @@ services:
       - "9081:8080"
     networks:
       - monitor-net
-    network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
       traefik.enable: false
@@ -110,7 +106,6 @@ services:
       - "9080:3000"
     networks:
       - monitor-net
-    network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
       traefik.backend: monitor
@@ -126,7 +121,6 @@ services:
       - "9091:9091"
     networks:
       - monitor-net
-    network_mode: bridge
     labels:
       org.label-schema.group: "monitoring"
       traefik.enable: false
